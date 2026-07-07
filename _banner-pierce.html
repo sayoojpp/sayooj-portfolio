@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+@font-face{font-family:'Google Sans';src:url('fonts/GoogleSans-VariableFont_GRAD_opsz_wght.ttf') format('truetype-variations');font-weight:300 800;font-style:normal;}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--accent:#9CE848;--ink:#F4F2EC;--ink-2:#A6A39B;--ink-3:#6C6962;}
+html,body{width:1600px;height:800px;overflow:hidden;}
+body{
+  font-family:'Google Sans',system-ui,sans-serif;
+  background:
+    radial-gradient(120% 140% at 88% 12%, rgba(156,232,72,.16), transparent 52%),
+    radial-gradient(90% 120% at 8% 92%, rgba(156,232,72,.07), transparent 50%),
+    #0C0C0D;
+  color:var(--ink);position:relative;
+}
+.grain{position:absolute;inset:0;opacity:.045;mix-blend-mode:screen;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+/* faint grid */
+.mesh{position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:64px 64px;-webkit-mask-image:linear-gradient(105deg,transparent 38%,#000 100%);mask-image:linear-gradient(105deg,transparent 38%,#000 100%);}
+
+.stage{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;}
+
+/* LEFT — editorial */
+.left{padding:96px 0 96px 100px;display:flex;flex-direction:column;justify-content:space-between;position:relative;z-index:3;}
+.kicker{display:inline-flex;align-items:center;gap:16px;font-size:19px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);}
+.kicker::before{content:"";width:46px;height:3px;background:var(--accent);}
+.title{font-weight:800;text-transform:uppercase;font-size:104px;line-height:.92;letter-spacing:-.02em;}
+.title em{font-style:normal;color:var(--accent);}
+.sub{margin-top:30px;font-size:24px;line-height:1.5;color:var(--ink-2);max-width:20ch;}
+.chips{display:flex;gap:12px;flex-wrap:wrap;}
+.chip{font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);border:1.5px solid rgba(255,255,255,.14);padding:11px 20px;border-radius:3px;}
+.chip.on{background:var(--accent);color:#0C0C0D;border-color:var(--accent);}
+
+/* RIGHT — storefront mock */
+.right{position:relative;overflow:hidden;}
+.browser{position:absolute;top:108px;left:40px;right:-120px;bottom:108px;background:#151517;border:1px solid rgba(255,255,255,.10);border-radius:16px 0 0 16px;box-shadow:-40px 40px 120px rgba(0,0,0,.55);transform:perspective(1700px) rotateY(-16deg) rotateX(3deg);transform-origin:left center;overflow:hidden;}
+.bar{height:58px;display:flex;align-items:center;gap:10px;padding:0 22px;border-bottom:1px solid rgba(255,255,255,.08);background:#1D1D20;}
+.dot{width:13px;height:13px;border-radius:50%;}
+.search{margin-left:18px;flex:1;height:32px;border-radius:100px;background:#0C0C0D;border:1px solid rgba(255,255,255,.10);display:flex;align-items:center;padding:0 16px;gap:10px;color:var(--ink-3);font-size:15px;}
+.search .mag{width:14px;height:14px;border:2px solid var(--ink-3);border-radius:50%;position:relative;}
+.search .mag::after{content:"";position:absolute;width:7px;height:2px;background:var(--ink-3);right:-5px;bottom:0;transform:rotate(45deg);}
+.store{display:grid;grid-template-columns:150px 1fr;height:calc(100% - 58px);}
+.side{border-right:1px solid rgba(255,255,255,.07);padding:22px 16px;display:flex;flex-direction:column;gap:14px;}
+.side .h{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:4px;}
+.side .row{height:13px;border-radius:4px;background:rgba(255,255,255,.09);}
+.side .row.a{width:90%;}.side .row.b{width:72%;}.side .row.c{width:84%;}.side .row.d{width:60%;}
+.side .row.sel{background:rgba(156,232,72,.30);width:96%;height:26px;border-radius:6px;}
+.main{padding:24px;display:flex;flex-direction:column;gap:18px;}
+.crumb{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink-3);}
+.crumb b{color:var(--ink);font-weight:600;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.card{background:#0F0F11;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;}
+.thumb{height:96px;background:linear-gradient(135deg,#222 0%,#181818 100%);position:relative;display:flex;align-items:center;justify-content:center;}
+.cog{width:46px;height:46px;border-radius:50%;border:3px solid var(--ink-3);position:relative;opacity:.6;}
+.cog::before,.cog::after{content:"";position:absolute;inset:8px;border-radius:50%;border:2px solid var(--ink-3);}
+.cog::after{inset:16px;}
+.card .body{padding:12px 13px 14px;}
+.card .sku{font-size:11px;letter-spacing:.08em;color:var(--ink-3);font-weight:600;}
+.card .nm{height:9px;width:78%;background:rgba(255,255,255,.16);border-radius:3px;margin-top:9px;}
+.card .nm2{height:9px;width:54%;background:rgba(255,255,255,.10);border-radius:3px;margin-top:7px;}
+.card .ft{display:flex;align-items:center;justify-content:space-between;margin-top:13px;}
+.card .price{font-size:15px;font-weight:700;color:var(--ink);}
+.card .add{font-size:11px;font-weight:700;color:#0C0C0D;background:var(--accent);padding:6px 11px;border-radius:5px;}
+.card.feat{border-color:rgba(156,232,72,.4);box-shadow:0 0 0 1px rgba(156,232,72,.25);}
+
+/* VTEX badge */
+.platform{position:absolute;left:80px;bottom:84px;z-index:4;display:flex;align-items:center;gap:14px;font-size:18px;color:var(--ink-3);letter-spacing:.04em;}
+.platform b{color:var(--ink);font-weight:600;}
+.platform .v{font-weight:800;color:var(--accent);letter-spacing:.02em;}
+</style>
+</head>
+<body>
+  <div class="mesh"></div>
+  <div class="stage">
+    <div class="left">
+      <span class="kicker">Case study · 01</span>
+      <div>
+        <div class="title">Pierce<br /><em>Parts</em></div>
+        <p class="sub">A B2B aftermarket storefront, rebuilt on VTEX.</p>
+      </div>
+      <div class="chips">
+        <span class="chip on">B2B commerce</span>
+        <span class="chip">UX redesign</span>
+        <span class="chip">Catalog &amp; search</span>
+      </div>
+    </div>
+    <div class="right">
+      <div class="browser">
+        <div class="bar">
+          <span class="dot" style="background:#FF5F57"></span>
+          <span class="dot" style="background:#FEBC2E"></span>
+          <span class="dot" style="background:#28C840"></span>
+          <div class="search"><span class="mag"></span> pierce parts — search the catalog</div>
+        </div>
+        <div class="store">
+          <div class="side">
+            <div class="h">Catalog</div>
+            <div class="row sel"></div>
+            <div class="row a"></div>
+            <div class="row b"></div>
+            <div class="row c"></div>
+            <div class="row d"></div>
+            <div class="h" style="margin-top:14px;">Filters</div>
+            <div class="row b"></div>
+            <div class="row a"></div>
+            <div class="row d"></div>
+          </div>
+          <div class="main">
+            <div class="crumb">Home <span>›</span> <b>Aftermarket parts</b></div>
+            <div class="grid">
+              <div class="card feat"><div class="thumb"><div class="cog"></div></div><div class="body"><div class="sku">SKU 4471-A</div><div class="nm"></div><div class="nm2"></div><div class="ft"><span class="price">$248</span><span class="add">Add</span></div></div></div>
+              <div class="card"><div class="thumb"><div class="cog"></div></div><div class="body"><div class="sku">SKU 2210-C</div><div class="nm"></div><div class="nm2"></div><div class="ft"><span class="price">$96</span><span class="add">Add</span></div></div></div>
+              <div class="card"><div class="thumb"><div class="cog"></div></div><div class="body"><div class="sku">SKU 8830-K</div><div class="nm"></div><div class="nm2"></div><div class="ft"><span class="price">$512</span><span class="add">Add</span></div></div></div>
+              <div class="card"><div class="thumb"><div class="cog"></div></div><div class="body"><div class="sku">SKU 1190-B</div><div class="nm"></div><div class="nm2"></div><div class="ft"><span class="price">$34</span><span class="add">Add</span></div></div></div>
+              <div class="card"><div class="thumb"><div class="cog"></div></div><div class="body"><div class="sku">SKU 6602-M</div><div class="nm"></div><div class="nm2"></div><div class="ft"><span class="price">$178</span><span class="add">Add</span></div></div></div>
+              <div class="card"><div class="thumb"><div class="cog"></div></div><div class="body"><div class="sku">SKU 7714-D</div><div class="nm"></div><div class="nm2"></div><div class="ft"><span class="price">$420</span><span class="add">Add</span></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="platform"><span>Re-platformed on</span> <span class="v">VTEX</span> <b>· cloud-native, API-first</b></div>
+  <div class="grain"></div>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-grain="on">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Specified Technologies (STI) — Visual Design Case Study · Sayooj</title>
+<style>
+@font-face{
+  font-family:'Google Sans';
+  src:url('fonts/GoogleSans-VariableFont_GRAD_opsz_wght.ttf') format('truetype-variations');
+  font-weight:300 800;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'Google Sans';
+  src:url('fonts/GoogleSans-Italic-VariableFont_GRAD_opsz_wght.ttf') format('truetype-variations');
+  font-weight:300 800;font-style:italic;font-display:swap;
+}
+:root{
+  --accent:#9CE848;
+  --accent-2:#7FCB2E;
+  --accent-ink:#0C0C0D;
+  --font-sans:"Google Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --maxw:1180px;
+  --gutter:clamp(20px,5vw,72px);
+  --bg:#0C0C0D;
+  --bg-2:#101012;
+  --surface:#151517;
+  --surface-2:#1D1D20;
+  --ink:#F4F2EC;
+  --ink-2:#A6A39B;
+  --ink-3:#6C6962;
+  --line:rgba(255,255,255,.10);
+  --line-2:rgba(255,255,255,.06);
+  --grain-opacity:.06;
+  /* STI brand */
+  --sti-navy:#09436A;
+  --sti-navy-d:#062E48;
+  --sti-navy-l:#1C76B0;
+  --sti-sky:#CFE2EF;
+  --sti-red:#E0231A;
+  --sti-red-d:#B5150E;
+  --sti-ink:#14181B;
+  --sti-slate:#5A6772;
+  --sti-cloud:#EEF2F5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);font-weight:400;line-height:1.5;overflow-x:hidden;}
+::selection{background:var(--accent);color:var(--accent-ink);}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+body::after{
+  content:"";position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:0;transition:opacity .4s ease;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:screen;
+}
+html[data-grain="on"] body::after{opacity:var(--grain-opacity);}
+
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter);}
+.overline{font-family:var(--font-sans);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);display:inline-flex;align-items:center;gap:14px;}
+.overline::before{content:"";width:34px;height:2px;background:var(--accent);display:inline-block;}
+.tnum{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
+.reveal.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;}}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;transition:background .3s ease,border-color .3s ease,backdrop-filter .3s ease;border-bottom:1px solid transparent;}
+.nav.scrolled{background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border-bottom:1px solid var(--line);}
+.nav-inner{max-width:var(--maxw);margin-inline:auto;padding:20px var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.logo{font-weight:700;font-size:22px;letter-spacing:-.01em;text-transform:uppercase;display:inline-flex;align-items:center;}
+.logo .dot{color:var(--accent);}
+.back{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:12.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);transition:color .2s ease,gap .2s ease;}
+.back:hover{color:var(--ink);gap:14px;}
+.back .arr{color:var(--accent);}
+
+/* HERO */
+.cs-hero{padding-top:148px;padding-bottom:clamp(36px,5vw,60px);}
+.cs-kicker{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:var(--font-mono);font-size:13px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:28px;}
+.cs-kicker .c-accent{color:var(--accent);}
+.cs-hero h1{font-family:var(--font-sans);font-weight:800;text-transform:none;font-size:clamp(34px,6vw,82px);line-height:.98;letter-spacing:-.02em;max-width:17ch;}
+.cs-hero h1 em{font-style:normal;color:var(--accent);}
+.cs-lede{margin-top:30px;max-width:62ch;font-size:clamp(16px,1.7vw,20px);line-height:1.65;color:var(--ink-2);}
+
+/* META BAR */
+.meta-bar{margin-top:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+.meta-bar .cell{background:var(--bg);padding:22px 24px;}
+.meta-bar .k{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);}
+.meta-bar .v{margin-top:9px;font-size:15px;font-weight:500;color:var(--ink);line-height:1.35;}
+.meta-bar .v em{font-style:normal;color:var(--accent);}
+
+/* COVER */
+.cover{margin-top:clamp(40px,5vw,64px);border:1px solid var(--line);overflow:hidden;background:var(--surface);}
+.cover .shot{display:block;width:100%;aspect-ratio:16/9;}
+
+/* SECTION */
+.cs-sec{padding-block:clamp(56px,8vw,108px);}
+.cs-sec.alt{background:var(--bg-2);border-block:1px solid var(--line);}
+.sec-grid{display:grid;grid-template-columns:.42fr .58fr;gap:clamp(32px,6vw,80px);align-items:start;}
+.sec-grid h2,.block h2{font-family:var(--font-sans);font-weight:800;text-transform:uppercase;font-size:clamp(26px,3.6vw,46px);line-height:1.02;letter-spacing:-.02em;}
+.sec-grid h2 em,.block h2 em{font-style:normal;color:var(--accent);}
+.prose p{font-size:clamp(15px,1.5vw,18px);line-height:1.78;color:var(--ink-2);max-width:60ch;}
+.prose p + p{margin-top:22px;}
+.prose strong{color:var(--ink);font-weight:500;}
+.block{max-width:var(--maxw);}
+.block > h2{margin-bottom:14px;max-width:20ch;}
+.block .lead{max-width:60ch;color:var(--ink-2);font-size:clamp(15px,1.5vw,18px);line-height:1.7;margin-bottom:40px;}
+
+.eyebrow{font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;display:block;}
+
+/* ===== LOGO SECTION ===== */
+.logo-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,24px);}
+.logo-card{border:1px solid var(--line);background:var(--surface);overflow:hidden;}
+.logo-card .pad{padding:clamp(28px,4vw,52px);min-height:230px;display:flex;align-items:center;justify-content:center;}
+.logo-card.before .pad{background:#0F1417;}
+.logo-card.after .pad{background:var(--sti-navy);background-image:radial-gradient(120% 140% at 80% -10%,var(--sti-navy-l) 0%,var(--sti-navy) 42%,var(--sti-navy-d) 100%);}
+.logo-card .tag{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);}
+.logo-card .tag b{font-weight:600;color:var(--ink-2);}
+.pill{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink-3);}
+.pill.red{color:#ffb4ad;border-color:rgba(224,35,26,.5);}
+.pill.grn{color:var(--accent);border-color:rgba(156,232,72,.45);}
+
+/* STI mark constructions */
+.sti-mark{display:inline-flex;align-items:center;gap:16px;}
+.sti-badge{width:78px;height:78px;border-radius:14px;display:grid;place-items:center;font-weight:800;letter-spacing:-.02em;font-size:34px;line-height:1;flex:none;}
+.sti-badge.solid{background:#fff;color:var(--sti-navy);box-shadow:inset 0 0 0 1px rgba(255,255,255,.0);}
+.sti-badge .spark{display:block;}
+.sti-word{display:flex;flex-direction:column;line-height:1;}
+.sti-word .name{font-weight:800;font-size:30px;letter-spacing:.02em;color:#fff;}
+.sti-word .sub{margin-top:7px;font-family:var(--font-mono);font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--sti-sky);padding-left:2px;}
+/* dated "before" */
+.sti-old{display:inline-flex;align-items:baseline;gap:2px;font-weight:700;font-size:42px;letter-spacing:-.01em;color:#7f97a6;}
+.sti-old .i{color:#c0392b;}
+.sti-old .firestop{font-weight:400;font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:#5b6b76;margin-left:8px;}
+
+.logo-notes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-top:none;}
+.logo-notes .ln{background:var(--bg);padding:22px 22px;}
+.logo-notes .ln .h{font-family:var(--font-sans);font-weight:700;font-size:15px;color:var(--ink);}
+.logo-notes .ln p{margin-top:8px;font-size:13.5px;line-height:1.6;color:var(--ink-2);}
+
+/* clearspace / variants strip */
+.mark-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:24px;}
+.mark-strip .ms{background:var(--surface);aspect-ratio:1/1;display:grid;place-items:center;position:relative;}
+.mark-strip .ms.navy{background:var(--sti-navy);}
+.mark-strip .ms.red{background:var(--sti-red);}
+.mark-strip .ms.light{background:var(--sti-cloud);}
+.mark-strip .ms .lbl{position:absolute;left:12px;bottom:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);}
+.mark-strip .ms.navy .lbl,.mark-strip .ms.red .lbl{color:rgba(255,255,255,.7);}
+.mark-strip .ms.light .lbl{color:var(--sti-slate);}
+.badge-sm{width:52px;height:52px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:22px;letter-spacing:-.02em;}
+
+/* ===== COLOR SECTION ===== */
+.sw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,18px);}
+.sw{border:1px solid var(--line);background:var(--surface);overflow:hidden;}
+.sw .chip{height:128px;display:flex;align-items:flex-end;padding:14px;}
+.sw .chip .role{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,.28);color:#fff;backdrop-filter:blur(2px);}
+.sw .chip.onlight .role{background:rgba(255,255,255,.6);color:var(--sti-ink);}
+.sw .meta{padding:14px;}
+.sw .meta .nm{font-weight:700;font-size:14px;color:var(--ink);}
+.sw .meta .hx{margin-top:4px;font-family:var(--font-mono);font-size:12px;color:var(--ink-3);letter-spacing:.02em;}
+.sw-row2{margin-top:clamp(12px,1.6vw,18px);display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(12px,1.6vw,18px);}
+.sw-sm{border:1px solid var(--line);overflow:hidden;background:var(--surface);}
+.sw-sm .chip{height:72px;}
+.sw-sm .meta{padding:11px 12px;}
+.sw-sm .meta .nm{font-size:12.5px;}
+.sw-sm .meta .hx{font-size:11px;}
+
+/* ===== TYPE SECTION ===== */
+.type-panel{border:1px solid var(--line);background:var(--surface);padding:clamp(26px,4vw,52px);}
+.type-row{display:flex;align-items:baseline;gap:20px;padding:18px 0;border-top:1px solid var(--line-2);flex-wrap:wrap;}
+.type-row:first-of-type{border-top:none;}
+.type-row .spec{font-family:var(--font-mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em;width:118px;flex:none;text-transform:uppercase;}
+.type-row .samp{color:var(--ink);line-height:1.04;letter-spacing:-.02em;}
+.t-display{font-weight:800;font-size:clamp(40px,6vw,72px);}
+.t-h2{font-weight:800;font-size:clamp(28px,4vw,44px);text-transform:uppercase;}
+.t-h3{font-weight:700;font-size:clamp(20px,2.4vw,28px);}
+.t-body{font-weight:400;font-size:18px;line-height:1.6;letter-spacing:0;color:var(--ink-2);max-width:54ch;}
+.t-mono{font-family:var(--font-mono);font-weight:500;font-size:14px;letter-spacing:.04em;color:var(--accent);}
+.t-scale{margin-top:24px;display:flex;flex-wrap:wrap;gap:10px;}
+.t-scale span{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-2);border:1px solid var(--line);padding:7px 12px;border-radius:2px;}
+.glyphset{margin-top:8px;font-weight:500;font-size:clamp(22px,3vw,34px);color:var(--ink);letter-spacing:.04em;word-spacing:.1em;}
+
+/* ===== GRAPHICS / ICONS ===== */
+.icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+.ic{background:var(--surface);padding:30px 22px;display:flex;flex-direction:column;gap:16px;transition:background .25s ease;}
+.ic:hover{background:var(--surface-2);}
+.ic .glyph{width:46px;height:46px;position:relative;}
+.ic .nm{font-weight:600;font-size:14px;color:var(--ink);}
+.ic .nm small{display:block;margin-top:4px;font-family:var(--font-mono);font-weight:400;font-size:11px;letter-spacing:.04em;color:var(--ink-3);text-transform:uppercase;}
+/* geometric glyphs built from simple shapes */
+.g-pen::before{content:"";position:absolute;inset:0;border:3px solid var(--sti-navy-l);border-radius:50%;}
+.g-pen::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;background:var(--sti-red);border-radius:50%;transform:translate(-50%,-50%);}
+.g-wall::before{content:"";position:absolute;inset:0;border:3px solid var(--sti-navy-l);}
+.g-wall::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;background:var(--sti-red);transform:translateX(-50%);}
+.g-joint::before{content:"";position:absolute;left:0;right:0;top:50%;height:3px;background:var(--sti-navy-l);transform:translateY(-50%);}
+.g-joint::after{content:"";position:absolute;left:50%;top:6px;bottom:6px;width:14px;background:repeating-linear-gradient(135deg,var(--sti-red) 0 4px,transparent 4px 8px);transform:translateX(-50%);}
+.g-smoke::before{content:"";position:absolute;left:6px;right:6px;top:8px;height:3px;background:var(--sti-navy-l);box-shadow:0 9px 0 var(--sti-navy-l),0 18px 0 var(--sti-red);border-radius:3px;}
+.g-leed::before{content:"";position:absolute;inset:4px;border:3px solid var(--sti-navy-l);transform:rotate(45deg);}
+.g-leed::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;background:var(--accent);transform:translate(-50%,-50%) rotate(45deg);}
+.g-search::before{content:"";position:absolute;left:4px;top:4px;width:28px;height:28px;border:3px solid var(--sti-navy-l);border-radius:50%;}
+.g-search::after{content:"";position:absolute;right:5px;bottom:5px;width:16px;height:3px;background:var(--sti-red);transform:rotate(45deg);transform-origin:right;}
+.g-tool::before{content:"";position:absolute;inset:0;border:3px solid var(--sti-navy-l);border-radius:8px;}
+.g-tool::after{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;border:3px solid var(--sti-red);border-radius:50%;transform:translate(-50%,-50%);}
+
+/* hazard / pattern motif */
+.motif-grid{margin-top:24px;display:grid;grid-template-columns:2fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);}
+@media(max-width:740px){.motif-grid{grid-template-columns:1fr;}}
+.motif{min-height:170px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:18px;}
+.motif .cap{position:relative;z-index:2;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.82);}
+.motif.stripe{background:var(--sti-navy);background-image:repeating-linear-gradient(135deg,rgba(224,35,26,.0) 0 22px,rgba(224,35,26,.9) 22px 30px,rgba(224,35,26,.0) 30px 52px);}
+.motif.dot{background:var(--sti-navy-d);background-image:radial-gradient(rgba(207,226,239,.55) 1.5px,transparent 1.6px);background-size:16px 16px;}
+
+/* ===== DEVICES ===== */
+.devices{position:relative;display:grid;grid-template-columns:1.55fr .82fr;gap:clamp(18px,3vw,40px);align-items:end;}
+@media(max-width:760px){.devices{grid-template-columns:1fr;justify-items:center;gap:34px;}}
+.laptop{width:100%;}
+.laptop .lid{background:#141417;border:1px solid #2c2c30;border-radius:16px;padding:11px;box-shadow:0 30px 70px -30px rgba(0,0,0,.85);}
+.laptop .scr{aspect-ratio:16/10;border-radius:7px;overflow:hidden;background:#000;}
+.laptop .base{height:13px;width:118%;margin:0 auto;margin-left:-9%;border-radius:0 0 12px 12px;background:linear-gradient(#36363b,#1d1d20);position:relative;box-shadow:0 14px 24px -14px rgba(0,0,0,.8);}
+.laptop .base::after{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:130px;height:8px;border-radius:0 0 9px 9px;background:#0e0e10;}
+.phone{width:min(258px,80%);margin-bottom:8px;}
+.phone .body{background:#141417;border:1px solid #2c2c30;border-radius:38px;padding:9px;box-shadow:0 26px 60px -26px rgba(0,0,0,.85);}
+.phone .scr{aspect-ratio:9/19.3;border-radius:30px;overflow:hidden;background:#000;position:relative;}
+.phone .notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:96px;height:20px;background:#141417;border-radius:12px;z-index:4;}
+.devices image-slot{width:100%;height:100%;display:block;}
+.dev-caps{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px;}
+.dev-caps span{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-2);border:1px solid var(--line);padding:8px 13px;border-radius:2px;}
+.dev-caps span b{color:var(--accent);font-weight:500;}
+
+/* STATS */
+.cs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;border-block:1px solid var(--line);padding-block:clamp(34px,4vw,52px);}
+.cs-stat .num{font-family:var(--font-mono);font-weight:700;font-size:clamp(30px,4vw,54px);line-height:1;color:var(--ink);}
+.cs-stat .num em{color:var(--accent);font-style:normal;}
+.cs-stat .lbl{margin-top:12px;font-size:12.5px;color:var(--ink-2);letter-spacing:.02em;text-transform:uppercase;line-height:1.4;}
+
+/* QUOTE */
+.cs-quote{max-width:860px;margin-inline:auto;text-align:center;}
+.cs-quote blockquote{font-family:var(--font-sans);font-weight:700;text-transform:none;font-style:italic;font-size:clamp(22px,3.2vw,40px);line-height:1.18;letter-spacing:-.02em;}
+.cs-quote blockquote em{font-style:italic;color:var(--accent);}
+.cs-quote .who{margin-top:30px;font-family:var(--font-mono);font-size:13px;color:var(--ink-2);letter-spacing:.04em;text-align:center;}
+.cs-quote .who b{font-weight:600;color:var(--ink);}
+
+/* CTA / NEXT */
+.cs-cta{text-align:center;}
+.cs-cta h2{font-family:var(--font-sans);font-weight:800;text-transform:uppercase;font-size:clamp(34px,7vw,104px);line-height:.94;letter-spacing:-.03em;}
+.cs-cta h2 em{font-style:normal;color:var(--accent);}
+.cs-cta .actions{margin-top:40px;display:flex;justify-content:center;flex-wrap:wrap;gap:16px;}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-sans);font-weight:600;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;padding:15px 28px;border-radius:2px;cursor:pointer;border:1.5px solid transparent;transition:transform .18s ease,background .2s ease,color .2s ease,border-color .2s ease;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--accent);color:var(--accent-ink);}
+.btn-primary:hover{background:var(--accent-2);}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.btn .arr{transition:transform .2s ease;}
+.btn:hover .arr{transform:translate(3px,-3px);}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--line);}
+.footer-inner{padding-block:28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-3);letter-spacing:.03em;}
+.footer-inner .c{color:var(--accent);}
+.footer-inner a:hover{color:var(--ink);}
+.src-note{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.02em;}
+.src-note a{color:var(--ink-2);border-bottom:1px solid var(--line);}
+.src-note a:hover{color:var(--accent);border-color:var(--accent);}
+
+image-slot{--is-bg:var(--surface);--is-fg:var(--ink-3);--is-border:var(--line);}
+
+@media (max-width:860px){
+  .meta-bar{grid-template-columns:repeat(2,1fr);}
+  .sec-grid{grid-template-columns:1fr;gap:24px;}
+  .logo-grid{grid-template-columns:1fr;}
+  .logo-notes{grid-template-columns:1fr;}
+  .sw-grid{grid-template-columns:repeat(2,1fr);}
+  .sw-row2{grid-template-columns:repeat(3,1fr);}
+  .icon-grid{grid-template-columns:repeat(2,1fr);}
+  .mark-strip{grid-template-columns:repeat(2,1fr);}
+  .cs-stats{grid-template-columns:1fr;gap:0;}
+  .cs-stat{padding-block:22px;border-top:1px solid var(--line);}
+  .cs-stat:first-child{border-top:none;}
+  .type-row .spec{width:100%;}
+}
+@media (max-width:520px){.sw-row2{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="Sayooj - Portfolio.html" class="logo">Sayooj<span class="dot">.</span></a>
+    <a href="Sayooj - Portfolio.html#work" class="back"><span class="arr">←</span> Back to work</a>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="cs-hero" data-screen-label="Hero">
+  <div class="wrap">
+    <div class="cs-kicker reveal">
+      <span class="c-accent">Visual design case study</span>
+      <span>•</span>
+      <span class="tnum">2025</span>
+      <span>•</span>
+      <span>Brand system · UI</span>
+    </div>
+    <h1 class="reveal">A visual system for <em>fire-protection</em> commerce</h1>
+    <p class="cs-lede reveal">STI is the global leader in firestop and fire-rated pathway systems — but its digital brand felt dated next to the engineering inside the products. I rebuilt the visual layer for the HubSpot relaunch: a refreshed logo lockup, a disciplined color system around STI's navy and signature firestop red, a clearer type scale, and a graphics language carried across every screen.</p>
+
+    <div class="meta-bar reveal">
+      <div class="cell"><div class="k">Role</div><div class="v">Visual &amp; UI<br />design</div></div>
+      <div class="cell"><div class="k">Deliverables</div><div class="v"><em>Logo</em> · color · type ·<br />icons · UI</div></div>
+      <div class="cell"><div class="k">Platform</div><div class="v">HubSpot CMS ·<br />PIM &amp; DAM</div></div>
+      <div class="cell"><div class="k">Client</div><div class="v">Specified Technologies<br />(w/ Echidna)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COVER -->
+<div class="wrap">
+  <div class="cover reveal">
+    <img class="shot" src="uploads/gvkgvk.png" alt="STI website shown across desktop, laptop and mobile against a skyscraper backdrop" style="object-fit:cover;" />
+  </div>
+</div>
+
+<!-- BRIEF -->
+<section class="cs-sec" data-screen-label="Brief">
+  <div class="wrap">
+    <div class="sec-grid">
+      <div class="reveal"><span class="overline">The brief</span><h2 style="margin-top:18px;">Match the brand to the <em>engineering</em></h2></div>
+      <div class="prose reveal">
+        <p>STI's products are precise, tested and trusted — but the old site read flat and inconsistent: a thin logo, ad-hoc blues, cramped type and clip-art iconography that undercut the credibility of a life-safety manufacturer.</p>
+        <p>The visual brief was to build a <strong>system, not a skin</strong> — components and rules that the STI team could apply themselves inside HubSpot, anchored in the equity they already had: the deep STI navy and the unmistakable firestop red.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGO -->
+<section class="cs-sec alt" data-screen-label="Logo">
+  <div class="wrap">
+    <div class="block">
+      <span class="eyebrow reveal">01 — Logo</span>
+      <h2 class="reveal">Logo <em>update</em></h2>
+      <p class="lead reveal">The wordmark was rebuilt into a compact, confident lockup: a square "STI" mark that holds up at favicon size, paired with a spaced "FIRESTOP" descriptor. It keeps the brand's blue-and-red equity while gaining structure and a clear system for placement.</p>
+
+      <div class="logo-grid reveal">
+        <div class="logo-card before">
+          <div class="pad">
+            <span class="sti-old">ST<span class="i">I</span><span class="firestop">Firestop</span></span>
+          </div>
+          <div class="tag"><span><b>Before</b> · thin, inconsistent weight</span><span class="pill red">retired</span></div>
+        </div>
+        <div class="logo-card after">
+          <div class="pad">
+            <div class="sti-mark">
+              <div class="sti-badge solid">STI</div>
+              <div class="sti-word"><span class="name">FIRESTOP</span><span class="sub">Specified&nbsp;Technologies</span></div>
+            </div>
+          </div>
+          <div class="tag"><span><b>After</b> · structured badge lockup</span><span class="pill grn">refreshed</span></div>
+        </div>
+      </div>
+
+      <div class="logo-notes reveal">
+        <div class="ln"><div class="h">Built for scale</div><p>The badge reads clearly from billboard to 16px favicon — no thin strokes to drop out.</p></div>
+        <div class="ln"><div class="h">Protected clearspace</div><p>Minimum padding equal to the height of the "S" keeps the mark uncrowded everywhere.</p></div>
+        <div class="ln"><div class="h">One system, four grounds</div><p>Defined treatments on navy, red, light and photographic backgrounds.</p></div>
+      </div>
+
+      <div class="mark-strip reveal">
+        <div class="ms navy"><div class="badge-sm solid" style="background:#fff;color:var(--sti-navy);">STI</div><span class="lbl">On navy</span></div>
+        <div class="ms red"><div class="badge-sm" style="background:#fff;color:var(--sti-red);">STI</div><span class="lbl">On red</span></div>
+        <div class="ms light"><div class="badge-sm" style="background:var(--sti-navy);color:#fff;">STI</div><span class="lbl">On light</span></div>
+        <div class="ms"><div class="badge-sm" style="background:var(--sti-red);color:#fff;">STI</div><span class="lbl">Reversed</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOR -->
+<section class="cs-sec" data-screen-label="Color">
+  <div class="wrap">
+    <div class="block">
+      <span class="eyebrow reveal">02 — Color</span>
+      <h2 class="reveal">Colour palette <em>update</em></h2>
+      <p class="lead reveal">The old site drifted across half a dozen unrelated blues. The new palette is built on two anchors — STI Navy and Firestop Red — with a disciplined set of tints and neutrals for UI, all tuned to pass AA contrast on web.</p>
+
+      <div class="sw-grid reveal">
+        <div class="sw">
+          <div class="chip" style="background:var(--sti-navy);"><span class="role">Primary</span></div>
+          <div class="meta"><div class="nm">STI Navy</div><div class="hx">#09436A</div></div>
+        </div>
+        <div class="sw">
+          <div class="chip" style="background:var(--sti-navy-l);"><span class="role">Secondary</span></div>
+          <div class="meta"><div class="nm">Signal Blue</div><div class="hx">#1C76B0</div></div>
+        </div>
+        <div class="sw">
+          <div class="chip" style="background:var(--sti-red);"><span class="role">Signature</span></div>
+          <div class="meta"><div class="nm">Firestop Red</div><div class="hx">#E0231A</div></div>
+        </div>
+        <div class="sw">
+          <div class="chip onlight" style="background:var(--sti-cloud);"><span class="role">Surface</span></div>
+          <div class="meta"><div class="nm">Cloud</div><div class="hx">#EEF2F5</div></div>
+        </div>
+      </div>
+
+      <div class="sw-row2 reveal">
+        <div class="sw-sm"><div class="chip" style="background:var(--sti-navy-d);"></div><div class="meta"><div class="nm">Ink Navy</div><div class="hx">#062E48</div></div></div>
+        <div class="sw-sm"><div class="chip" style="background:var(--sti-sky);"></div><div class="meta"><div class="nm">Sky Tint</div><div class="hx">#CFE2EF</div></div></div>
+        <div class="sw-sm"><div class="chip" style="background:var(--sti-red-d);"></div><div class="meta"><div class="nm">Ember</div><div class="hx">#B5150E</div></div></div>
+        <div class="sw-sm"><div class="chip" style="background:var(--sti-ink);"></div><div class="meta"><div class="nm">Carbon</div><div class="hx">#14181B</div></div></div>
+        <div class="sw-sm"><div class="chip" style="background:var(--sti-slate);"></div><div class="meta"><div class="nm">Slate</div><div class="hx">#5A6772</div></div></div>
+        <div class="sw-sm"><div class="chip onlight" style="background:#fff;"></div><div class="meta"><div class="nm">White</div><div class="hx">#FFFFFF</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPE -->
+<section class="cs-sec alt" data-screen-label="Type">
+  <div class="wrap">
+    <div class="block">
+      <span class="eyebrow reveal">03 — Typography</span>
+      <h2 class="reveal">Type &amp; style <em>guide</em></h2>
+      <p class="lead reveal">A single, engineered sans does the heavy lifting — geometric enough to feel technical, open enough to stay legible across dense spec tables. A mono is reserved for product codes and data labels.</p>
+
+      <div class="type-panel reveal">
+        <div class="type-row"><span class="spec">Display / 72</span><span class="samp t-display">Engineer peace of mind</span></div>
+        <div class="type-row"><span class="spec">Heading / 44</span><span class="samp t-h2">Firestop systems</span></div>
+        <div class="type-row"><span class="spec">Subhead / 28</span><span class="samp t-h3">EZ-Path® fire-rated pathways</span></div>
+        <div class="type-row"><span class="spec">Body / 18</span><span class="samp t-body">Tested, listed and compliant solutions for penetrations, curtain wall, construction joints and smoke &amp; acoustical applications — described in plain language for every trade.</span></div>
+        <div class="type-row"><span class="spec">Mono / 14</span><span class="samp t-mono">SKU · WF300 — UL 1479 — 2 HR RATED</span></div>
+        <div class="type-row" style="border-top:1px solid var(--line);margin-top:6px;padding-top:22px;">
+          <span class="spec">Specimen</span>
+          <div>
+            <div class="glyphset">AaBbCcGgKkRr 0123456789 &amp; %</div>
+            <div class="t-scale">
+              <span>12</span><span>14</span><span>16</span><span>18</span><span>22</span><span>28</span><span>36</span><span>44</span><span>56</span><span>72</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRAPHICS -->
+<section class="cs-sec" data-screen-label="Graphics">
+  <div class="wrap">
+    <div class="block">
+      <span class="eyebrow reveal">04 — Graphics</span>
+      <h2 class="reveal">Iconography &amp; <em>graphics</em></h2>
+      <p class="lead reveal">Clip-art was replaced with a geometric icon set on a consistent grid and stroke — navy as the structural line, red as the single point of emphasis. A pair of brand patterns gives marketing surfaces texture without competing with product photography.</p>
+
+      <div class="icon-grid reveal">
+        <div class="ic"><div class="glyph g-pen"></div><div class="nm">Penetrations<small>Sealants &amp; collars</small></div></div>
+        <div class="ic"><div class="glyph g-wall"></div><div class="nm">Curtain Wall<small>Perimeter barrier</small></div></div>
+        <div class="ic"><div class="glyph g-joint"></div><div class="nm">Construction Joints<small>Sprays &amp; gaskets</small></div></div>
+        <div class="ic"><div class="glyph g-smoke"></div><div class="nm">Smoke &amp; Acoustical<small>EZ-Path NEZ</small></div></div>
+        <div class="ic"><div class="glyph g-search"></div><div class="nm">System Search<small>Submittal builder</small></div></div>
+        <div class="ic"><div class="glyph g-tool"></div><div class="nm">Digital Tools<small>Estimators</small></div></div>
+        <div class="ic"><div class="glyph g-leed"></div><div class="nm">Sustainability<small>LEED credits</small></div></div>
+        <div class="ic"><div class="glyph g-pen" style="--x:0"></div><div class="nm">Engineering<small>Support services</small></div></div>
+      </div>
+
+      <div class="motif-grid reveal">
+        <div class="motif stripe"><span class="cap">// Hazard motif — used sparingly for alerts &amp; section breaks</span></div>
+        <div class="motif dot"><span class="cap">// Dot grid — calm background texture</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEVICES -->
+<section class="cs-sec alt" data-screen-label="Screens">
+  <div class="wrap">
+    <div class="block">
+      <span class="eyebrow reveal">05 — In context</span>
+      <h2 class="reveal">The system, <em>shipped</em></h2>
+      <p class="lead reveal">The brand applied end-to-end across the responsive HubSpot build — desktop browsing and search on the left, the mobile product experience on the right. Drop in the real screens.</p>
+
+      <div class="devices reveal">
+        <div class="laptop">
+          <div class="lid">
+            <div class="scr"><image-slot id="sti-desktop" shape="rect" fit="cover" placeholder="Desktop screen — 16:10"></image-slot></div>
+          </div>
+          <div class="base"></div>
+        </div>
+        <div class="phone">
+          <div class="body">
+            <div class="scr">
+              <div class="notch"></div>
+              <image-slot id="sti-mobile" shape="rect" fit="cover" placeholder="Mobile screen — 9:19"></image-slot>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dev-caps reveal">
+        <span><b>Desktop</b> — home, search &amp; product</span>
+        <span><b>Mobile</b> — guided selection &amp; PDP</span>
+        <span><b>Built in</b> — HubSpot CMS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="cs-sec" style="padding-block:0;" data-screen-label="Results">
+  <div class="wrap">
+    <div class="cs-stats reveal">
+      <div class="cs-stat"><div class="num tnum">76<em>%</em></div><div class="lbl">increase in user acquisition<br />from direct search · first 30 days</div></div>
+      <div class="cs-stat"><div class="num tnum">27<em>%</em></div><div class="lbl">rise in acquisition from<br />organic search · first 30 days</div></div>
+      <div class="cs-stat"><div class="num tnum">2<em>↔</em></div><div class="lbl">brand anchors — navy &amp; red —<br />systematised across the site</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="cs-sec" data-screen-label="Quote">
+  <div class="wrap">
+    <div class="cs-quote reveal">
+      <span class="overline" style="justify-content:center;">Client</span>
+      <blockquote style="margin-top:24px;">It streamlined communication with customers and simplified their search for information — a <em>76% increase</em> from direct searches and 27% from organic within the first 30 days.</blockquote>
+      <div class="who"><b>Justin Pine</b> · Senior Manager, Software &amp; Services, Specified Technologies Inc.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cs-sec alt cs-cta" data-screen-label="Next">
+  <div class="wrap">
+    <span class="overline reveal" style="justify-content:center;">Next</span>
+    <h2 class="reveal" style="margin-top:22px;">Let's <em>work</em></h2>
+    <div class="actions reveal">
+      <a href="Pierce Manufacturing - Case Study.html" class="btn btn-ghost">← Previous case study</a>
+      <a href="Sayooj - Portfolio.html#contact" class="btn btn-primary">Get in touch <span class="arr">↗</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span><span class="c">©</span> <span id="year">2026</span> Sayooj — Case study</span>
+    <span class="src-note">Project delivered with <a href="https://echidna.co/ecommerce-case-studies/sti-ecommerce-story" target="_blank" rel="noopener">Echidna</a> · brand artifacts shown are design explorations · details paraphrased from the published story</span>
+  </div>
+</footer>
+
+<script src="image-slot.js"></script>
+<script>
+  const nav=document.getElementById('nav');
+  const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>24);
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+  document.getElementById('year').textContent=new Date().getFullYear();
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach((en)=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+  },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
